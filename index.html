@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro de Pedido</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 8px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input, textarea, button {
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    button {
+      background: #00ff88;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <form id="pedidoForm">
+    <h2>Novo Pedido</h2>
+
+    <input type="text" name="placa" placeholder="Placa do veículo" required />
+    <input type="text" name="cliente" placeholder="Nome do cliente" required />
+    <input type="text" name="telefone" placeholder="Telefone (WhatsApp)" required />
+    
+    <textarea name="descricao" placeholder="Descrição do pedido"></textarea>
+
+    <input type="file" name="fotos" multiple required />
+
+    <button type="submit">Enviar Pedido</button>
+
+    <div id="status"></div>
+  </form>
+
+  <script>
+    const form = document.getElementById("pedidoForm");
+    const status = document.getElementById("status");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      status.innerText = "Enviando pedido...";
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch("http://localhost:3333/upload", {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error("Erro ao enviar pedido");
+        }
+
+        const data = await response.json();
+
+        status.innerText = "Pedido enviado! Código: " + data.codigo;
+
+      } catch (err) {
+        status.innerText = "Erro ao conectar com o servidor.";
+      }
+    });
+  </script>
+
+</body>
+</htm
