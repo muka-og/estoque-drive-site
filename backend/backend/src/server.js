@@ -3,20 +3,22 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import uploadRoutes from "./routes/upload.routes.js";
-import pedidoRoutes from "./routes/pedido.routes.js";
-import consultaRoutes from "./routes/consulta.routes.js";
 
 dotenv.config();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
 app.use("/upload", uploadRoutes);
-app.use("/pedido", pedidoRoutes);
-app.use("/consulta", consultaRoutes);
 
-app.get("/", (_, res) => res.send("API rodando 🚀"));
+app.get("/", (req, res) => {
+  res.send("API rodando 🚀");
+});
 
 const PORT = process.env.PORT || 3333;
-app.listen(PORT, () => console.log(`Servidor na porta ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Servidor na porta ${PORT}`);
+});
+
