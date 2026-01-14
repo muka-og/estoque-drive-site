@@ -4,7 +4,7 @@ const status = document.getElementById("status");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  status.innerText = "Enviando...";
+  status.innerText = "Enviando pedido...";
 
   const formData = new FormData(form);
 
@@ -14,16 +14,18 @@ form.addEventListener("submit", async (e) => {
       body: formData
     });
 
-    const result = await response.json();
-
-    if (result.sucesso) {
-      status.innerText = "Pedido enviado com sucesso ✅";
-      form.reset();
-    } else {
-      status.innerText = "Erro ao enviar ❌";
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text);
     }
 
-  } catch (err) {
-    status.innerText = "Erro de conexão com a API ❌";
+    const data = await response.json();
+    console.log("Resposta API:", data);
+
+    status.innerText = `Pedido enviado! Código: ${data.codigo}`;
+
+  } catch (error) {
+    console.error("ERRO REAL:", error);
+    status.innerText = "❌ Erro: " + error.message;
   }
 });
