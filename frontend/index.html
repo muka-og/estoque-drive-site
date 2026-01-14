@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload + Estoque</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Cadastro de Pedido</h1>
+
+  <form id="formUpload">
+    <label>Placa do veículo</label>
+    <input type="text" name="placa" required />
+
+    <label>Nome do cliente</label>
+    <input type="text" name="cliente" required />
+
+    <label>Telefone (WhatsApp)</label>
+    <input type="text" name="telefone" placeholder="11999999999" required />
+
+    <label>Descrição do pedido</label>
+    <textarea name="descricao"></textarea>
+
+    <label>Fotos</label>
+    <input type="file" name="fotos" multiple required />
+
+    <button type="submit">Enviar Pedido</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
