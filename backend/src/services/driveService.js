@@ -10,7 +10,7 @@ const auth = new google.auth.JWT(
 const drive = google.drive({ version: "v3", auth });
 
 async function criarPasta(nome, parentId) {
-  const response = await drive.files.create({
+  const res = await drive.files.create({
     requestBody: {
       name: nome,
       mimeType: "application/vnd.google-apps.folder",
@@ -19,20 +19,20 @@ async function criarPasta(nome, parentId) {
     fields: "id"
   });
 
-  return response.data.id;
+  return res.data.id;
 }
 
 async function buscarOuCriarPasta(nome, parentId) {
-  const response = await drive.files.list({
+  const res = await drive.files.list({
     q: `name='${nome}' and mimeType='application/vnd.google-apps.folder' and '${parentId}' in parents and trashed=false`,
     fields: "files(id, name)"
   });
 
-  if (response.data.files.length > 0) {
-    return response.data.files[0].id;
+  if (res.data.files.length > 0) {
+    return res.data.files[0].id;
   }
 
-  return await criarPasta(nome, parentId);
+  return criarPasta(nome, parentId);
 }
 
 export async function salvarNoDrive(files, data, placa) {
