@@ -1,0 +1,7 @@
+<form id="form">
+  <input type="text" name="placa" placeholder="Placa" required />
+  <input type="file" name="fotos" multiple required />
+  <button>Enviar</button>
+</form>
+
+<script src="js/upload.js"></script>
